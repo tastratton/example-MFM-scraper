@@ -42,17 +42,17 @@
   ```
 
 - last step should have created an example-MFM-scraper folder with contents from repo.
-
 - make a temp folder e.g. "(example-MFM-scraper/temp" and ***MOVE*** example-privateKeys.js into it.
   - rename example-privateKeys.js to privateKeys.js
   - edit the /temp/privateKeys.js and replace the placeholder string value with your vendor issued ID.
+- install node components:
 
   ```console
   cd example-MFM-scraper
   npm install express nodemon node-fetch
   ```
 
-- from project folder (example-MFM-scraper), run npm init and accept defaults.
+- from project folder (example-MFM-scraper), run npm init and review / accept defaults.  The entry point should be changed if needed to index.js. 
 
   ```console
   npm init
@@ -66,7 +66,7 @@
   +->client
   |       ...
   +->node_modules
-  |
+  |       ...
   +->server
   |       ...
   +->temp
