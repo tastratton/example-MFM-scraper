@@ -9,22 +9,21 @@
 
 - In addition, there could be data elements (e.g. an ID or token assigned by vendor) which we may not want exposed in the publicly accessible client side code.  These will be safeguarded by placing them only in non-accessible server side code.
 
-```textart
-
----client---       ----server code----             ---vendor service---
-browser initiate--->serve page
-                          |
-                    secret only on server
-                          | 
-                    server program
-                          |
-                    send request
-                          +---------------------> process secret
-                                                        |
-                                                   return data
-                                                        |
-display data <------reformat data <---------------------+
-```
+  ```textart
+  ---client---       ----server code----             ---vendor service---
+  browser initiate--->serve page
+                            |
+                      secret only on server
+                            | 
+                      server program
+                            |
+                      send request
+                            +---------------------> process secret
+                                                          |
+                                                    return data
+                                                          |
+  display data <------reformat data <---------------------+
+  ```
 
 - Since browsers restrict cross site request, in order to get the data, we will need server side code to make the data request.
 
@@ -38,9 +37,9 @@ display data <------reformat data <---------------------+
 - you need node installed if not already.  install node LTS version (this was built on 14.17.3 LTS)
 - change to the folder where you keep your coding projects and run:
 
-      ```console
-      git clone https://github.com/tastratton/example-MFM-scraper.git
-      ```
+  ```console
+  git clone https://github.com/tastratton/example-MFM-scraper.git
+  ```
 
 - last step should have created an example-MFM-scraper folder with contents from repo.
 
@@ -48,44 +47,44 @@ display data <------reformat data <---------------------+
   - rename example-privateKeys.js to privateKeys.js
   - edit the /temp/privateKeys.js and replace the placeholder string value with your vendor issued ID.
 
-      ```console
-      cd example-MFM-scraper
-      npm install express nodemon node-fetch
-      ```
+  ```console
+  cd example-MFM-scraper
+  npm install express nodemon node-fetch
+  ```
 
 - from project folder (example-MFM-scraper), run npm init and accept defaults.
 
-      ```console
-      npm init
-      ```
+  ```console
+  npm init
+  ```
 
 - your folder structure should now look like this:
 
-      ```textart
-      example-MFM-scraper
-      |
-      +->client
-      |       ...
-      +->node_modules
-      |
-      +->server
-      |       ...
-      +->temp
-      |    +->privateKeys.js
-      +->.gitignore
-      +->chromeDevMode.sh
-      +->package-lock.json
-      +->package.json
-      +->readme.md
-      +->runme.sh
-      ```
+  ```textart
+  example-MFM-scraper
+  |
+  +->client
+  |       ...
+  +->node_modules
+  |
+  +->server
+  |       ...
+  +->temp
+  |    +->privateKeys.js
+  +->.gitignore
+  +->chromeDevMode.sh
+  +->package-lock.json
+  +->package.json
+  +->readme.md
+  +->runme.sh
+  ```
 
 - run runme.sh or review it as needed to generate a similar command for your platform to start the node server.  e.g.
 
-      ```console
-      cd server
-      npx nodemon index.js -V
-      ```
+  ```console
+  cd server
+  npx nodemon index.js -V
+  ```
 
 - open your browser at localhost:3000
 - (optional) if you want to see the client-server version of the javascript code "work", you need to run your browser with command line options to disable normal security.  If you do this make sure you don't browse anything else on the web in this browser while it is like this!  See / run chromeDevMode.sh for command line to do this.  NOTE: this is for educational purposes only, do not attempt this on a real internet page!
