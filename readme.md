@@ -1,6 +1,6 @@
 # example: data table scraper
 
-- setting up scraping for the mortgage table requires ***server side code*** due to browser restrictions for cross origin.
+- setting up scraping for the rate table requires ***server side code*** due to browser restrictions for cross origin.
 
 <details>
 <summary> click here for more info</summary>
