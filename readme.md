@@ -1,6 +1,9 @@
 # example: data table scraper
 
-- setting up scraping for the rate table requires ***server side code*** due to browser restrictions for cross origin.
+## IMPORTANT  
+This code is an incomplete example intended to demonstrate techniques.  It does ***not*** have all safeguards that would be necessary to safely deploy in production in regards to sanitizing and filtering data!  It should **never** be deployed outside of a protected environment without addressing these deficiencies.
+
+### setting up scraping for the rate table requires ***server side code*** due to browser restrictions for cross origin.
 
 <details>
 <summary> click here for more info</summary>
@@ -31,7 +34,7 @@
 
 </details>
 
-## Steps to get running
+### Steps to get running
 
 - you need git installed if not already
 - you need node installed if not already.  install node LTS version (this was built on 14.17.3 LTS)
