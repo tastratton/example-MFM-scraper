@@ -34,7 +34,7 @@ res.send(`<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8">
 <title>Welcome to your running node server</title>
-</head>
+<!--just try to make it a bit less ugly by grabbing some css off the web-->
 <link rel="stylesheet" href="https://www.prowebdesign.ro/simple-responsive-template/css/basic-style.css" />
 <style>
 a {
@@ -51,6 +51,7 @@ details {
     cursor: pointer;
   }
 </style>
+</head>
 <body>
 
 <div>

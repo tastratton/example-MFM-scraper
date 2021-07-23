@@ -28,8 +28,11 @@ display data <------reformat data <---------------------+
 ## Steps to get running
 
 - install node LTS version (this was built on 14.17.3 LTS)
-- npm install express nodemon node-fetch
+- clone this repo
+- from project folder, npm install express nodemon node-fetch
   - //cors body-parser not used.  TODO: verify
+- from project folder, npm init and accept defaults.
+
 - make a folder in this directory "temp" and comp example-privateKeys.js into it.
   - rename example-privateKeys.js to privateKeys.js
   - edit the new file /temp/privateKeys.js and replace the placeholder string with your vendor issued ID.
