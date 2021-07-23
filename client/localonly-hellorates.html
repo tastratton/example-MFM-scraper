@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<title>sample rate table scraper</title>
+<style>
+/*whatever style you want!*/
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    tr:nth-child(even) {background: #CCC}
+    tr:nth-child(odd) {background: #FFF}
+</style>
+<script>
+    //IMPORTANT: DO NOT USE THIS CODE!  this is insecure and for demo only
+var mfmId="?id=" //+your ID here is insecure!
+
+var mfmurl="https://ratewidget.memberfirstmortgage.com/ratestable.aspx"
+var mfmTitletext="&titletext=Today%27s+Rates"
+var mfmTitlecolor="&titlecolor=434243"
+var mfmHeaderColor="&headerColor=7AC143"
+
+function readTableData(tableObject) {
+    var rowArrayOfCellArray = []
+    // LOOP THROUGH EACH ROW OF THE TABLE AFTER HEADER.
+    for (i = 1; i < tableObject.rows.length; i++) {
+        row=[];
+        // GET THE CELLS COLLECTION OF THE CURRENT ROW.
+        var objCells = tableObject.rows.item(i).cells;
+
+        // LOOP THROUGH EACH CELL OF THE CURENT ROW TO READ CELL VALUES.
+        for (var j = 0; j < objCells.length; j++) {
+            row.push(objCells.item(j).innerHTML);
+        }
+        rowArrayOfCellArray.push(row);
+    }
+    return rowArrayOfCellArray;
+}
+
+
+function createTable(tableData) {
+    //console.log ("tableData");
+    //console.log(tableData);
+  var table = document.createElement('table');
+  var tableBody = document.createElement('tbody');
+
+  tableData.forEach(function(rowData) {
+      //console.log("rowData");
+      //console.log(rowData);
+    var row = document.createElement('tr');
+
+    rowData.forEach(function(cellData) {
+        //console.log(cellData);
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(cellData));
+      row.appendChild(cell);
+    });
+
+    tableBody.appendChild(row);
+  });
+
+  table.appendChild(tableBody);
+  //document.body.appendChild(table);
+  document.getElementById("tableplaceholder").appendChild(table);
+}
+
+//helper function to clear all data in a node
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function doInsecureClick(){
+    console.log ("entered doInsecureClick");
+    //clear the contents of the table div if there are any there from prior click
+    removeAllChildNodes(document.getElementById("tableplaceholder"));
+
+    //get the mfmId from the input
+    mfmId = "?id=" + document.getElementById("mfmIdInputButton").value;
+    console.log("mfmId.length: " + mfmId.length);
+    urlToFetch = mfmurl + mfmId + mfmTitletext + mfmTitlecolor + mfmHeaderColor
+    console.log("urlToFetch: " + urlToFetch); 
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    var getResponse;
+    fetch(urlToFetch, requestOptions)
+        .then(function(response) {
+            console.log("processing response");
+            if (!response.ok) {
+                console.log("response is NOT ok!");
+                console.log(response);
+                throw new Error('HTTP error, status = ' + response.status);
+            }
+            //note the Content-Type response is "text/html", not "text/plain" 
+            //and there is no CORS policy coming from server.  
+            //So, it won't get exempted even with GET 
+            // - we can't do this client side except for security disabled browsers 
+            //so its pretty much useless except for demonstration purposes
+            //the real code will have to have a server side component to fetch the data.
+        return response.text();
+        })
+        .then(function(myText) {
+            console.log("response was ok");
+            console.log(myText);
+            //note that this could lead to severe vulnerabilities 
+            //if your vendor or network / client is compromised and you would probably
+            //never do this in production like this via client side script
+            var externalDoc= new DOMParser().parseFromString(myText, "text/html");
+            console.log("externalDoc object is:")
+            console.log(externalDoc);
+            var responseTables=externalDoc.getElementsByTagName('table');
+            console.log("responseTables object is: ");
+            console.log(responseTables);
+            console.log("found " + responseTables.length + " responseTables")
+            if (! responseTables.length === 1 ){
+                //even though we got an html response it eitehr has more or less tables than expected, log an error
+                console.log("error parsing tables in html response");
+            }
+            else {
+                //grab just the data from the table, dumping the styles, and pump it into an array of row arrays of cells
+                tableAsArrayOfRowsOfCells = readTableData(responseTables[0]);
+                console.log(tableAsArrayOfRowsOfCells);
+                createTable(tableAsArrayOfRowsOfCells);
+            }
+        })
+    .catch(function(error) {
+      console.log("sending error message " + error.message + " to page");
+      var msgdiv=document.getElementById("tableplaceholder");
+      msgdiv.appendChild(
+        document.createTextNode('Error: ' + error.message)
+      );
+      
+    });
+}
+
+</script>
+</head>
+<body>
+    <a href="/">&lt;--back</a>
+    <h1>IMPORTANT: DO NOT USE THIS CODE</h1>
+    <h2>this code should not work in a properly secured browser and is for demonstration only</h2>
+    <p>this method requires the MFM ID to be avaialble to the client - anyone could read it if its coded in script</p>
+    <input id="mfmIdInputButton" type="password" placeholder="enter ID issued by MFM"></input>
+    <p>this button runs insecure local version that will only run if browser security is disabled.</p>
+    <button id="getData" onclick="doInsecureClick()">get data!</button>
+    <div id="tableplaceholder"></div>
+</body>
+</html>
