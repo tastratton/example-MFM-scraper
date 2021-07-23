@@ -1,8 +1,6 @@
 const express = require('express')
 const app = express()
-//const bodyParser = require('body-parser')
-const cors = require('cors')
-const fs = require('fs')
+//const fs = require('fs')
 const port = 3000
 const fetch = require('node-fetch');
 
@@ -21,12 +19,7 @@ if (privateKeys.MFMCustomerId.length < 1) {
     process.exit(1);
 }
 console.log ("MFMCustomerID was found and is " + privateKeys.MFMCustomerId.length + " characters long.");
-// We are using our packages here
-//app.use( bodyParser.json() );       // to support JSON-encoded bodies
 
-//app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-// extended: true})); 
-app.use(cors())
 app.use('/client', express.static('../client')) //when launched from server directory we need ..
 //You can use this to check if your server is working
 app.get('/', (req, res)=>{
